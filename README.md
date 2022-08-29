@@ -1,4 +1,4 @@
-# Workshop 01
+# Laboratory 01
 
 Introduction to the mathematical modeling tool GAMS.
 
