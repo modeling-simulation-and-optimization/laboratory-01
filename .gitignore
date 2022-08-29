@@ -350,5 +350,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# GAMS' Logs
+# GAMS' Execution Files
 *.log*
+*.lxi

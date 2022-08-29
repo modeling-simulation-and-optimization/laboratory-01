@@ -1,0 +1,235 @@
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+      Laboratorio 1 - MOS
+      Ejercicio 2
+       
+      Realizado por:
+      Juan Andrés Romero C - 202013449
+      Juan Sebastián Alegría - 202011282
+   9   
+  10  Sets e 'Employees' /e1, e2, e3, e4/
+  11       j 'Jobs'      /j1, j2, j3, j4/;
+  12   
+  13  Table t(e, j) 'Required time'
+  14       j1 j2 j3 j4
+  15   e1  14  5  8  7
+  16   e2  2   12 6  5
+  17   e3  7   8  3  9
+  18   e4  2   4  6 10;
+  19   
+  20  Variables
+  21      x(e,j) 'Employee/Job pair selected'
+  22      z 'Target function';
+  23   
+  24  Binary Variable
+  25      x;
+  26   
+  27  Scalar minJobs 'Minimum amount of jobs done' /4/;
+  28  Scalar maxJobs 'Maximum amount of jobs done' /4/;
+  29   
+  30  Equations
+  31      targetFunc 'Target Function'
+  32      minConstraint 'Minimum Jobs Constraint'
+  33      maxConstraint 'Maximum Jobs Constraint';
+  34  *uniqueConstraint(e) 'Every employee can only do one Job';
+  35   
+  36  targetFunc .. z =e= sum((e,j), t(e,j));
+  37  minConstraint .. sum((e,j), x(e,j)) =l= maxJobs;
+  38  maxConstraint .. minJobs =l= sum((e,j), x(e,j));
+  39  *uniqueConstraint(e,j) .. x(e,j);
+  40   
+  41  Model Exercise2 /all/;
+  42  option MIP=CPLEX;
+  43  Solve Exercise2 using mip minimizing z;
+  44  Display x.l;
+  45  Display z.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE Exercise2 Using MIP From line 43
+
+
+---- targetFunc  =E=  Target Function
+
+targetFunc..  z =E= 108 ; (LHS = 0, INFES = 108 ****)
+     
+
+---- minConstraint  =L=  Minimum Jobs Constraint
+
+minConstraint..  x(e1,j1) + x(e1,j2) + x(e1,j3) + x(e1,j4) + x(e2,j1) + x(e2,j2) + x(e2,j3) + x(e2,j4) + x(e3,j1) + x(e3,j2) + x(e3,j3) + x(e3,j4) + x(e4,j1) + x(e4,j2) + x(e4,j3) + x(e4,j4) =L= 4 ; (LHS = 0)
+     
+
+---- maxConstraint  =L=  Maximum Jobs Constraint
+
+maxConstraint..  - x(e1,j1) - x(e1,j2) - x(e1,j3) - x(e1,j4) - x(e2,j1) - x(e2,j2) - x(e2,j3) - x(e2,j4) - x(e3,j1) - x(e3,j2) - x(e3,j3) - x(e3,j4) - x(e4,j1) - x(e4,j2) - x(e4,j3) - x(e4,j4) =L= -4 ; (LHS = 0, INFES = 4 ****)
+     
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE Exercise2 Using MIP From line 43
+
+
+---- x  Employee/Job pair selected
+
+x(e1,j1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       minConstraint
+       -1       maxConstraint
+
+x(e1,j2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       minConstraint
+       -1       maxConstraint
+
+x(e1,j3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       minConstraint
+       -1       maxConstraint
+
+REMAINING 13 ENTRIES SKIPPED
+
+---- z  Target function
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       targetFunc
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE Exercise2 Using MIP From line 43
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 4.000E+00, 1.080E+02]
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE Exercise2 Using MIP From line 43
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           17
+NON ZERO ELEMENTS            33     DISCRETE VARIABLES         16
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE Exercise2 Using MIP From line 43
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   Exercise2           OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  43
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              108.0000
+
+ RESOURCE USAGE, LIMIT          0.031 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Proven optimal solution
+MIP Solution:          108.000000    (0 iterations, 0 nodes)
+Final Solve:           108.000000    (0 iterations)
+
+Best possible:         108.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU targetFunc       108.0000       108.0000       108.0000         1.0000      
+---- EQU minConstr~        -INF            4.0000         4.0000          .          
+---- EQU maxConstr~        -INF           -4.0000        -4.0000          .          
+
+  targetFunc  Target Function
+  minConstraint  Minimum Jobs Constraint
+  maxConstraint  Maximum Jobs Constraint
+
+---- VAR x  Employee/Job pair selected
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+e1.j1          .             1.0000         1.0000         EPS         
+e1.j2          .             1.0000         1.0000         EPS         
+e1.j3          .             1.0000         1.0000         EPS         
+e1.j4          .             1.0000         1.0000         EPS         
+e2.j1          .              .             1.0000         EPS         
+e2.j2          .              .             1.0000         EPS         
+e2.j3          .              .             1.0000         EPS         
+e2.j4          .              .             1.0000         EPS         
+e3.j1          .              .             1.0000         EPS         
+e3.j2          .              .             1.0000         EPS         
+e3.j3          .              .             1.0000         EPS         
+e3.j4          .              .             1.0000         EPS         
+e4.j1          .              .             1.0000         EPS         
+e4.j2          .              .             1.0000         EPS         
+e4.j3          .              .             1.0000         EPS         
+e4.j4          .              .             1.0000         EPS         
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF          108.0000        +INF             .          
+
+  z  Target function
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/29/22 14:00:54 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     44 VARIABLE x.L  Employee/Job pair selected
+
+            j1          j2          j3          j4
+
+e1       1.000       1.000       1.000       1.000
+
+
+----     45 VARIABLE z.L                   =      108.000  Target function
+
+
+EXECUTION TIME       =        0.140 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+
+
+USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN
+      University of Los Andes, Colombia                        DL072145
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise2.gms
+Output     C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise2.lst
