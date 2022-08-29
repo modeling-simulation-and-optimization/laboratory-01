@@ -1,0 +1,203 @@
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+      Laboratorio 1 - MOS
+      Ejercicio 1
+       
+      Realizado por:
+      Juan Andrés Romero C - 202013449
+      Juan Sebastián Alegría - 202011282
+   9   
+  10  Sets i 'articles' /a1, a2, a3, a4, a5/;
+  11   
+  12  Parameter v(i) 'Valor de cada artículo' /a1 12, a2 5, a3 9, a4 6, a5 4/;
+  13  Parameter p(i) 'Peso de cada artículo' /a1 9, a2 2, a3 2, a4 1, a5 3/;
+  14   
+  15  Scalar LIMIT 'Máximo que puede llevar la mochila' /10/;
+  16   
+  17  Variables x(i) 'Indica si se incluye o no el artículo'
+  18            z    'Función objetivo';
+  19   
+  20  Binary Variable x;
+  21   
+  22  Equations targetFunc 'Función Objetivo'
+  23            constraint 'Restricción';
+  24   
+  25  targetFunc .. z =e= sum((i), v(i)*x(i));
+  26  constraint .. sum((i), p(i)*x(i)) =l= LIMIT;
+  27   
+  28  Model exercise1 /all/;
+  29  option mip=CPLEX;
+  30  Solve exercise1 using mip maximizing z;
+  31   
+  32  Display x.l;
+  33  Display z.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE exercise1 Using MIP From line 30
+
+
+---- targetFunc  =E=  Función Objetivo
+
+targetFunc..  - 12*x(a1) - 5*x(a2) - 9*x(a3) - 6*x(a4) - 4*x(a5) + z =E= 0 ; (LHS = 0)
+     
+
+---- constraint  =L=  Restricción
+
+constraint..  9*x(a1) + 2*x(a2) + 2*x(a3) + x(a4) + 3*x(a5) =L= 10 ; (LHS = 0)
+     
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE exercise1 Using MIP From line 30
+
+
+---- x  Indica si se incluye o no el artículo
+
+x(a1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+      -12       targetFunc
+        9       constraint
+
+x(a2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -5       targetFunc
+        2       constraint
+
+x(a3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -9       targetFunc
+        2       constraint
+
+REMAINING 2 ENTRIES SKIPPED
+
+---- z  Función objetivo
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       targetFunc
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE exercise1 Using MIP From line 30
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+01, 1.000E+01] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE exercise1 Using MIP From line 30
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            2
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            11     DISCRETE VARIABLES          5
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE exercise1 Using MIP From line 30
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   exercise1           OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  30
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               24.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         1    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.00sec (det. 0.03 ticks)
+
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Proven optimal solution
+MIP Solution:           24.000000    (1 iterations, 0 nodes)
+Final Solve:            24.000000    (0 iterations)
+
+Best possible:          24.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU targetFunc          .              .              .             1.0000      
+---- EQU constraint        -INF            8.0000        10.0000          .          
+
+  targetFunc  Función Objetivo
+  constraint  Restricción
+
+---- VAR x  Indica si se incluye o no el artículo
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+a1          .              .             1.0000        12.0000      
+a2          .             1.0000         1.0000         5.0000      
+a3          .             1.0000         1.0000         9.0000      
+a4          .             1.0000         1.0000         6.0000      
+a5          .             1.0000         1.0000         4.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF           24.0000        +INF             .          
+
+  z  Función objetivo
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     32 VARIABLE x.L  Indica si se incluye o no el artículo
+
+a2 1.000,    a3 1.000,    a4 1.000,    a5 1.000
+
+
+----     33 VARIABLE z.L                   =       24.000  Función objetivo
+
+
+EXECUTION TIME       =        0.047 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+
+
+USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN
+      University of Los Andes, Colombia                        DL072145
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\ElRey\Documents\Scripts\GAMS\workshop-01\exercise1.gms
+Output     C:\Users\ElRey\Documents\Scripts\GAMS\workshop-01\exercise1.lst
