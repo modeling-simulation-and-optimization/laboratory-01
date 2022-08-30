@@ -24,21 +24,17 @@ Variables
 Binary Variable
     x;
 
-Scalar minJobs 'Minimum amount of jobs done' /4/;
-Scalar maxJobs 'Maximum amount of jobs done' /4/;
-
 Equations
     targetFunc 'Target Function'
-    minConstraint 'Minimum Jobs Constraint'
-    maxConstraint 'Maximum Jobs Constraint'
-    uniqueConstraint(e,j) 'Every employee can only do one Job';
-
-targetFunc .. z =e= sum((e,j), t(e,j));
-minConstraint .. sum((e,j), x(e,j)) =l= maxJobs;
-maxConstraint .. minJobs =l= sum((e,j), x(e,j));
-uniqueConstraint(e,j) .. x(e,j);
+    uniqueConstraintE(e) 'Every employee can only do one Job'
+    uniqueConstraintJ(j) 'Every job can be done by only one employee';
+    
+targetFunc .. z =e= sum((e,j), t(e,j)*x(e,j));
+uniqueConstraintE(e) .. sum((j), x(e,j)) =e= 1;
+uniqueConstraintJ(j) .. sum((e), x(e,j)) =e= 1;
 
 Model Exercise2 /all/;
 option MIP=CPLEX;
 Solve Exercise2 using mip minimizing z;
 Display x.l;
+Display z.l;
