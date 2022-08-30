@@ -1,4 +1,4 @@
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 1
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -23,34 +23,32 @@ C o m p i l a t i o n
   20   i3  14 9  16  5;
   21   
   22  Variables
-  23      x(i,j) 'CPU link selected'
+  23      x(i,j) 'Amount of sent process per path'
   24      z 'Target Function';
   25   
-  26  Binary Variable
+  26  Positive Variable
   27      x;
   28   
   29  Equations
   30      targetFunc 'Target Function'
-  31  *minOperations 'Minimum Number of Operations'
-  32      totalProcessesNeeded(i) 'Total processes needed'
-  33      maxProcesses(j) 'Max proccesses per destination CPU';
-  34   
-  35  targetFunc .. z =e= sum((i,j), t(i,j)*x(i,j));
-  36  *minOperations .. sum((i,j), x(i,j)) =g= 4;
-  37  totalProcessesNeeded(i) .. sum((j), b(j)*x(i,j)) =l= a(i);
-  38  maxProcesses(j) .. sum((i), a(i)*x(i,j) - b(j)*x(i,j)) =e= b(j);
-  39   
-  40   
-  41  Model Exercise3 /all/;
-  42  option MIP=CPLEX;
-  43  Solve Exercise3 using mip minimizing z;
-  44  Display x.l;
+  31      maxProcessesSent(i) 'Maximum amount of processes sent per origin CPU'
+  32      satisfiedCPUDemand(j) 'Destination CPU process demand';
+  33   
+  34  targetFunc .. z =e= sum((i,j), t(i,j)*x(i,j));
+  35  maxProcessesSent(i) .. sum((j), x(i,j)) =l= a(i);
+  36  satisfiedCPUDemand(j) .. sum((i), x(i,j)) =e= b(j);
+  37   
+  38   
+  39  Model Exercise3 /all/;
+  40  option MIP=CPLEX;
+  41  Solve Exercise3 using mip minimizing z;
+  42  Display x.l;
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 2
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE Exercise3 Using MIP From line 43
+Equation Listing    SOLVE Exercise3 Using MIP From line 41
 
 
 ---- targetFunc  =E=  Target Function
@@ -58,48 +56,49 @@ Equation Listing    SOLVE Exercise3 Using MIP From line 43
 targetFunc..  - 8*x(i1,j1) - 6*x(i1,j2) - 10*x(i1,j3) - 9*x(i1,j4) - 9*x(i2,j1) - 12*x(i2,j2) - 13*x(i2,j3) - 7*x(i2,j4) - 14*x(i3,j1) - 9*x(i3,j2) - 16*x(i3,j3) - 5*x(i3,j4) + z =E= 0 ; (LHS = 0)
      
 
----- totalProcessesNeeded  =L=  Total processes needed
+---- maxProcessesSent  =L=  Maximum amount of processes sent per origin CPU
 
-totalProcessesNeeded(i1)..  200*x(i1,j1) + 300*x(i1,j2) + 100*x(i1,j3) + 400*x(i1,j4) =L= 300 ; (LHS = 0)
+maxProcessesSent(i1)..  x(i1,j1) + x(i1,j2) + x(i1,j3) + x(i1,j4) =L= 300 ; (LHS = 0)
      
-totalProcessesNeeded(i2)..  200*x(i2,j1) + 300*x(i2,j2) + 100*x(i2,j3) + 400*x(i2,j4) =L= 500 ; (LHS = 0)
+maxProcessesSent(i2)..  x(i2,j1) + x(i2,j2) + x(i2,j3) + x(i2,j4) =L= 500 ; (LHS = 0)
      
-totalProcessesNeeded(i3)..  200*x(i3,j1) + 300*x(i3,j2) + 100*x(i3,j3) + 400*x(i3,j4) =L= 200 ; (LHS = 0)
+maxProcessesSent(i3)..  x(i3,j1) + x(i3,j2) + x(i3,j3) + x(i3,j4) =L= 200 ; (LHS = 0)
      
 
----- maxProcesses  =E=  Max proccesses per destination CPU
+---- satisfiedCPUDemand  =E=  Destination CPU process demand
 
-maxProcesses(j1)..  100*x(i1,j1) + 300*x(i2,j1) =E= 200 ; (LHS = 0, INFES = 200 ****)
+satisfiedCPUDemand(j1)..  x(i1,j1) + x(i2,j1) + x(i3,j1) =E= 200 ; (LHS = 0, INFES = 200 ****)
      
-maxProcesses(j2)..  200*x(i2,j2) - 100*x(i3,j2) =E= 300 ; (LHS = 0, INFES = 300 ****)
+satisfiedCPUDemand(j2)..  x(i1,j2) + x(i2,j2) + x(i3,j2) =E= 300 ; (LHS = 0, INFES = 300 ****)
      
-maxProcesses(j3)..  200*x(i1,j3) + 400*x(i2,j3) + 100*x(i3,j3) =E= 100 ; (LHS = 0, INFES = 100 ****)
+satisfiedCPUDemand(j3)..  x(i1,j3) + x(i2,j3) + x(i3,j3) =E= 100 ; (LHS = 0, INFES = 100 ****)
      
 REMAINING ENTRY SKIPPED
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 3
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE Exercise3 Using MIP From line 43
+Column Listing      SOLVE Exercise3 Using MIP From line 41
 
 
----- x  CPU link selected
+---- x  Amount of sent process per path
 
 x(i1,j1)
-                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
        -8       targetFunc
-      200       totalProcessesNeeded(i1)
-      100       maxProcesses(j1)
+        1       maxProcessesSent(i1)
+        1       satisfiedCPUDemand(j1)
 
 x(i1,j2)
-                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
        -6       targetFunc
-      300       totalProcessesNeeded(i1)
+        1       maxProcessesSent(i1)
+        1       satisfiedCPUDemand(j2)
 
 x(i1,j3)
-                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
       -10       targetFunc
-      100       totalProcessesNeeded(i1)
-      200       maxProcesses(j3)
+        1       maxProcessesSent(i1)
+        1       satisfiedCPUDemand(j3)
 
 REMAINING 9 ENTRIES SKIPPED
 
@@ -109,47 +108,47 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       targetFunc
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 4
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE Exercise3 Using MIP From line 43
+Range Statistics    SOLVE Exercise3 Using MIP From line 41
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
 RHS       [min, max] : [ 1.000E+02, 5.000E+02] - Zero values observed as well
-Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 4.000E+02]
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.600E+01]
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 5
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE Exercise3 Using MIP From line 43
+Model Statistics    SOLVE Exercise3 Using MIP From line 41
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            8
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES           13
-NON ZERO ELEMENTS            35     DISCRETE VARIABLES         12
+NON ZERO ELEMENTS            37
 
 
 GENERATION TIME      =        0.015 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 6
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE Exercise3 Using MIP From line 43
+Solution Report     SOLVE Exercise3 Using MIP From line 41
 
 
                S O L V E      S U M M A R Y
 
      MODEL   Exercise3           OBJECTIVE  z
      TYPE    MIP                 DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  43
+     SOLVER  CPLEX               FROM LINE  41
 
 **** SOLVER STATUS     1 Normal Completion
-**** MODEL STATUS      10 Integer Infeasible
-**** OBJECTIVE VALUE               NA
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             7300.0000
 
- RESOURCE USAGE, LIMIT          0.015 10000000000.000
- ITERATION COUNT, LIMIT         0    2147483647
+ RESOURCE USAGE, LIMIT          0.032 10000000000.000
+ ITERATION COUNT, LIMIT         3    2147483647
 --- *** This solver runs with a demo license. No commercial use.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
@@ -158,24 +157,80 @@ Solution Report     SOLVE Exercise3 Using MIP From line 43
 --- Starting Cplex
 
 
---- MIP status (103): integer infeasible.
---- Cplex Time: 0.00sec (det. 0.00 ticks)
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 0.02 ticks)
 
---- Problem is integer infeasible
 
-No solution returned
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 15:38:13 Page 7
+Optimal solution found
+Objective:         7300.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU targetFunc          .              .              .             1.0000      
+
+  targetFunc  Target Function
+
+---- EQU maxProcessesSent  Maximum amount of processes sent per origin CPU
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+i1        -INF          300.0000       300.0000        -3.0000      
+i2        -INF          500.0000       500.0000          .          
+i3        -INF          200.0000       200.0000        -2.0000      
+
+---- EQU satisfiedCPUDemand  Destination CPU process demand
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+j1       200.0000       200.0000       200.0000         9.0000      
+j2       300.0000       300.0000       300.0000         9.0000      
+j3       100.0000       100.0000       100.0000        13.0000      
+j4       400.0000       400.0000       400.0000         7.0000      
+
+---- VAR x  Amount of sent process per path
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+i1.j1          .              .            +INF            2.0000      
+i1.j2          .           300.0000        +INF             .          
+i1.j3          .              .            +INF             .          
+i1.j4          .              .            +INF            5.0000      
+i2.j1          .           200.0000        +INF             .          
+i2.j2          .              .            +INF            3.0000      
+i2.j3          .           100.0000        +INF             .          
+i2.j4          .           200.0000        +INF             .          
+i3.j1          .              .            +INF            7.0000      
+i3.j2          .              .            +INF            2.0000      
+i3.j3          .              .            +INF            5.0000      
+i3.j4          .           200.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF         7300.0000        +INF             .          
+
+  z  Target Function
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 16:29:49 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----     44 VARIABLE x.L  CPU link selected
+----     42 VARIABLE x.L  Amount of sent process per path
 
-                      ( ALL       0.000 )
+            j1          j2          j3          j4
+
+i1                 300.000
+i2     200.000                 100.000     200.000
+i3                                         200.000
 
 
 
-EXECUTION TIME       =        0.109 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+EXECUTION TIME       =        0.203 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
 
 
 USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN

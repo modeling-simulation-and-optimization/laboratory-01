@@ -20,22 +20,20 @@ Table t(i, j) 'Transmission costs between CPUs'
  i3  14 9  16  5;
  
 Variables
-    x(i,j) 'CPU link selected'
+    x(i,j) 'Amount of sent process per path'
     z 'Target Function';
     
-Binary Variable
+Positive Variable
     x;
     
 Equations
     targetFunc 'Target Function'
-*minOperations 'Minimum Number of Operations'
-    totalProcessesNeeded(i) 'Total processes needed'
-    maxProcesses(j) 'Max proccesses per destination CPU';
+    maxProcessesSent(i) 'Maximum amount of processes sent per origin CPU'
+    satisfiedCPUDemand(j) 'Destination CPU process demand';
     
 targetFunc .. z =e= sum((i,j), t(i,j)*x(i,j));
-*minOperations .. sum((i,j), x(i,j)) =g= 4;
-totalProcessesNeeded(i) .. sum((j), b(j)*x(i,j)) =l= a(i);
-maxProcesses(j) .. sum((i), a(i)*x(i,j) - b(j)*x(i,j)) =e= b(j);
+maxProcessesSent(i) .. sum((j), x(i,j)) =l= a(i);
+satisfiedCPUDemand(j) .. sum((i), x(i,j)) =e= b(j);
 
 
 Model Exercise3 /all/;
