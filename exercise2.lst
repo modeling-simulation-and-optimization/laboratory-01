@@ -1,4 +1,4 @@
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 1
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -44,7 +44,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 2
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE Exercise2 Using MIP From line 38
 
@@ -75,7 +75,7 @@ uniqueConstraintJ(j3)..  x(e1,j3) + x(e2,j3) + x(e3,j3) + x(e4,j3) =E= 1 ; (LHS 
      
 REMAINING ENTRY SKIPPED
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 3
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE Exercise2 Using MIP From line 38
 
@@ -108,7 +108,7 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       targetFunc
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 4
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE Exercise2 Using MIP From line 38
 
@@ -119,7 +119,7 @@ RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.400E+01]
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 5
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE Exercise2 Using MIP From line 38
 
@@ -132,7 +132,7 @@ NON ZERO ELEMENTS            49     DISCRETE VARIABLES         16
 
 
 GENERATION TIME      =        0.016 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 6
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE Exercise2 Using MIP From line 38
 
@@ -147,7 +147,7 @@ Solution Report     SOLVE Exercise2 Using MIP From line 38
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE               15.0000
 
- RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
  ITERATION COUNT, LIMIT         3    2147483647
 --- *** This solver runs with a demo license. No commercial use.
 --- GMO setup time: 0.00s
@@ -158,7 +158,7 @@ Solution Report     SOLVE Exercise2 Using MIP From line 38
 
 
 --- MIP status (101): integer optimal solution.
---- Cplex Time: 0.02sec (det. 0.10 ticks)
+--- Cplex Time: 0.00sec (det. 0.10 ticks)
 
 --- Fixing integer variables and solving final LP...
 
@@ -231,7 +231,7 @@ e4.j4          .              .             1.0000        10.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 07:28:19 Page 7
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -249,7 +249,7 @@ e4       1.000
 ----     40 VARIABLE z.L                   =       15.000  Target function
 
 
-EXECUTION TIME       =        0.063 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+EXECUTION TIME       =        0.078 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
 
 
 USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN

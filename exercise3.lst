@@ -1,0 +1,204 @@
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+      Laboratorio 1 - MOS
+      Ejercicio 3
+       
+      Realizado por:
+      Juan Andrés Romero C - 202013449
+      Juan Sebastián Alegría - 202011282
+   9   
+  10  Sets i 'Origin CPUs'           /i1, i2, i3/
+  11       j 'Destination CPUs'      /j1, j2, j3, j4/;
+  12   
+  13  Parameter a(i) 'Amount of processes supplied by Origin'      /i1 300, i2 500, i3 200/;
+  14  Parameter b(j) 'Amount of processes needed by Destination' /j1 200, j2 300, j3 100, j4 400/;
+  15   
+  16  Table t(i, j) 'Transmission costs between CPUs'
+  17       j1 j2 j3 j4
+  18   i1  8  6  10  9
+  19   i2  9  12 13  7
+  20   i3  14 9  16  5;
+  21   
+  22  Variables
+  23      x(i,j) 'CPU link selected'
+  24      maxReceived 'Received processes by Destination'
+  25      z 'Target Function';
+  26   
+  27  Binary Variable
+  28      x;
+  29  Positive Variable
+  30      maxReceived;
+  31   
+  32  maxReceived.l = 0;
+  33   
+  34  loop (j, maxReceived.l = maxReceived.l + b(j));
+  35   
+  36   
+  37  Equations
+  38      targetFunc 'Target Function'
+  39  minOperations 'Minimum Number of Operations'
+  40  totalProcessesNeeded(i) 'Total processes needed'
+  41      maxProcesses(j) 'Max proccesses per destination CPU';
+  42   
+  43  targetFunc .. z =e= sum((i,j), t(i,j)*x(i,j));
+  44  minOperations .. sum((i,j), x(i,j)) =g= 3;
+  45  totalProcessesNeeded(i) .. sum((j), b(j)*x(i,j)) =l= a(i);
+  46  maxProcesses(j) .. sum((i), a(i)*x(i,j)) =l= b(j);
+  47   
+  48  Model Exercise3 /all/;
+  49  option MIP=CPLEX;
+  50  Solve Exercise3 using mip minimizing z;
+  51  Display x.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE Exercise3 Using MIP From line 50
+
+
+---- targetFunc  =E=  Target Function
+
+targetFunc..  - 8*x(i1,j1) - 6*x(i1,j2) - 10*x(i1,j3) - 9*x(i1,j4) - 9*x(i2,j1) - 12*x(i2,j2) - 13*x(i2,j3) - 7*x(i2,j4) - 14*x(i3,j1) - 9*x(i3,j2) - 16*x(i3,j3) - 5*x(i3,j4) + z =E= 0 ; (LHS = 0)
+     
+
+---- minOperations  =G=  Minimum Number of Operations
+
+minOperations..  x(i1,j1) + x(i1,j2) + x(i1,j3) + x(i1,j4) + x(i2,j1) + x(i2,j2) + x(i2,j3) + x(i2,j4) + x(i3,j1) + x(i3,j2) + x(i3,j3) + x(i3,j4) =G= 3 ; (LHS = 0, INFES = 3 ****)
+     
+
+---- totalProcessesNeeded  =L=  Total processes needed
+
+totalProcessesNeeded(i1)..  200*x(i1,j1) + 300*x(i1,j2) + 100*x(i1,j3) + 400*x(i1,j4) =L= 300 ; (LHS = 0)
+     
+totalProcessesNeeded(i2)..  200*x(i2,j1) + 300*x(i2,j2) + 100*x(i2,j3) + 400*x(i2,j4) =L= 500 ; (LHS = 0)
+     
+totalProcessesNeeded(i3)..  200*x(i3,j1) + 300*x(i3,j2) + 100*x(i3,j3) + 400*x(i3,j4) =L= 200 ; (LHS = 0)
+     
+
+---- maxProcesses  =L=  Max proccesses per destination CPU
+
+maxProcesses(j1)..  300*x(i1,j1) + 500*x(i2,j1) + 200*x(i3,j1) =L= 200 ; (LHS = 0)
+     
+maxProcesses(j2)..  300*x(i1,j2) + 500*x(i2,j2) + 200*x(i3,j2) =L= 300 ; (LHS = 0)
+     
+maxProcesses(j3)..  300*x(i1,j3) + 500*x(i2,j3) + 200*x(i3,j3) =L= 100 ; (LHS = 0)
+     
+REMAINING ENTRY SKIPPED
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE Exercise3 Using MIP From line 50
+
+
+---- x  CPU link selected
+
+x(i1,j1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -8       targetFunc
+        1       minOperations
+      200       totalProcessesNeeded(i1)
+      300       maxProcesses(j1)
+
+x(i1,j2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -6       targetFunc
+        1       minOperations
+      300       totalProcessesNeeded(i1)
+      300       maxProcesses(j2)
+
+x(i1,j3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+      -10       targetFunc
+        1       minOperations
+      100       totalProcessesNeeded(i1)
+      300       maxProcesses(j3)
+
+REMAINING 9 ENTRIES SKIPPED
+
+---- z  Target Function
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       targetFunc
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE Exercise3 Using MIP From line 50
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 3.000E+00, 5.000E+02] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 5.000E+02]
+
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE Exercise3 Using MIP From line 50
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           4     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            49     DISCRETE VARIABLES         12
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE Exercise3 Using MIP From line 50
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   Exercise3           OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  50
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      10 Integer Infeasible
+**** OBJECTIVE VALUE               NA
+
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- MIP status (103): integer infeasible.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+--- Problem is integer infeasible
+
+No solution returned
+GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 14:54:52 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     51 VARIABLE x.L  CPU link selected
+
+                      ( ALL       0.000 )
+
+
+
+EXECUTION TIME       =        0.093 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+
+
+USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN
+      University of Los Andes, Colombia                        DL072145
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise3.gms
+Output     C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise3.lst
