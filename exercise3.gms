@@ -21,29 +21,22 @@ Table t(i, j) 'Transmission costs between CPUs'
  
 Variables
     x(i,j) 'CPU link selected'
-    maxReceived 'Received processes by Destination'
     z 'Target Function';
     
 Binary Variable
     x;
-Positive Variable
-    maxReceived;
-    
-maxReceived.l = 0;
-
-loop (j, maxReceived.l = maxReceived.l + b(j));
-       
     
 Equations
     targetFunc 'Target Function'
 *minOperations 'Minimum Number of Operations'
-*totalProcessesNeeded(i) 'Total processes needed'
+    totalProcessesNeeded(i) 'Total processes needed'
     maxProcesses(j) 'Max proccesses per destination CPU';
     
 targetFunc .. z =e= sum((i,j), t(i,j)*x(i,j));
-*minOperations .. sum((i,j), x(i,j)) =g= 3;
-*totalProcessesNeeded(i) .. sum((j), b(j)*x(i,j)) =l= a(i);
-maxProcesses(j) .. sum((i), a(i)*x(i,j)) =l= b(j);
+*minOperations .. sum((i,j), x(i,j)) =g= 4;
+totalProcessesNeeded(i) .. sum((j), b(j)*x(i,j)) =l= a(i);
+maxProcesses(j) .. sum((i), a(i)*x(i,j) - b(j)*x(i,j)) =e= b(j);
+
 
 Model Exercise3 /all/;
 option MIP=CPLEX;
