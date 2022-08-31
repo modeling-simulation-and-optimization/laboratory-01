@@ -1,12 +1,12 @@
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 1
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-      Laboratorio 1 - MOS
-      Ejercicio 2
+      Laboratory 1 - MOS
+      Exercise 2
        
-      Realizado por:
+      Made by:
       Juan Andrés Romero C - 202013449
       Juan Sebastián Alegría - 202011282
    9   
@@ -14,39 +14,37 @@ C o m p i l a t i o n
   11       j 'Jobs'      /j1, j2, j3, j4/;
   12   
   13  Table t(e, j) 'Required time'
-  14       j1 j2 j3 j4
-  15   e1  14  5  8  7
-  16   e2  2   12 6  5
-  17   e3  7   8  3  9
-  18   e4  2   4  6 10;
-  19   
-  20  Variables
-  21      x(e,j) 'Employee/Job pair selected'
-  22      z 'Target function';
+  14   
+  15       j1 j2 j3 j4
+  16   e1  14  5  8  7
+  17   e2  2  12  6  5
+  18   e3  7   8  3  9
+  19   e4  2   4  6 10;
+  20   
+  21  Variables x(e,j) 'Employee/Job pair selected'
+  22            z      'Target function';
   23   
-  24  Binary Variable
-  25      x;
-  26   
-  27  Equations
-  28      targetFunc 'Target Function'
-  29      uniqueConstraintE(e) 'Every employee can only do one Job'
-  30      uniqueConstraintJ(j) 'Every job can be done by only one employee';
-  31   
-  32  targetFunc .. z =e= sum((e,j), t(e,j)*x(e,j));
-  33  uniqueConstraintE(e) .. sum((j), x(e,j)) =e= 1;
-  34  uniqueConstraintJ(j) .. sum((e), x(e,j)) =e= 1;
-  35   
-  36  Model Exercise2 /all/;
-  37  option MIP=CPLEX;
-  38  Solve Exercise2 using mip minimizing z;
-  39  Display x.l;
-  40  Display z.l;
+  24  Binary Variable x;
+  25   
+  26  Equations targetFunc           'Target Function'
+  27            uniqueConstraintE(e) 'Every employee can only do one job'
+  28            uniqueConstraintJ(j) 'Every job can be done by only one employee';
+  29   
+  30  targetFunc..           z =e= sum((e,j), t(e,j)*x(e,j));
+  31  uniqueConstraintE(e).. sum((j), x(e,j)) =e= 1;
+  32  uniqueConstraintJ(j).. sum((e), x(e,j)) =e= 1;
+  33   
+  34  Model Exercise2 /all/;
+  35  option MIP=CPLEX;
+  36  Solve Exercise2 using mip minimizing z;
+  37  Display x.l;
+  38  Display z.l;
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 2
+COMPILATION TIME     =        0.003 SECONDS      3 MB  40.1.0 93c2a77b DEX-DEG
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE Exercise2 Using MIP From line 38
+Equation Listing    SOLVE Exercise2 Using MIP From line 36
 
 
 ---- targetFunc  =E=  Target Function
@@ -54,7 +52,7 @@ Equation Listing    SOLVE Exercise2 Using MIP From line 38
 targetFunc..  - 14*x(e1,j1) - 5*x(e1,j2) - 8*x(e1,j3) - 7*x(e1,j4) - 2*x(e2,j1) - 12*x(e2,j2) - 6*x(e2,j3) - 5*x(e2,j4) - 7*x(e3,j1) - 8*x(e3,j2) - 3*x(e3,j3) - 9*x(e3,j4) - 2*x(e4,j1) - 4*x(e4,j2) - 6*x(e4,j3) - 10*x(e4,j4) + z =E= 0 ; (LHS = 0)
      
 
----- uniqueConstraintE  =E=  Every employee can only do one Job
+---- uniqueConstraintE  =E=  Every employee can only do one job
 
 uniqueConstraintE(e1)..  x(e1,j1) + x(e1,j2) + x(e1,j3) + x(e1,j4) =E= 1 ; (LHS = 0, INFES = 1 ****)
      
@@ -75,9 +73,9 @@ uniqueConstraintJ(j3)..  x(e1,j3) + x(e2,j3) + x(e3,j3) + x(e4,j3) =E= 1 ; (LHS 
      
 REMAINING ENTRY SKIPPED
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 3
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE Exercise2 Using MIP From line 38
+Column Listing      SOLVE Exercise2 Using MIP From line 36
 
 
 ---- x  Employee/Job pair selected
@@ -108,9 +106,9 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       targetFunc
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 4
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE Exercise2 Using MIP From line 38
+Range Statistics    SOLVE Exercise2 Using MIP From line 36
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -119,9 +117,9 @@ RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.400E+01]
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 5
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE Exercise2 Using MIP From line 38
+Model Statistics    SOLVE Exercise2 Using MIP From line 36
 
 
 MODEL STATISTICS
@@ -131,25 +129,25 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           17
 NON ZERO ELEMENTS            49     DISCRETE VARIABLES         16
 
 
-GENERATION TIME      =        0.016 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 6
+GENERATION TIME      =        0.006 SECONDS      4 MB  40.1.0 93c2a77b DEX-DEG
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE Exercise2 Using MIP From line 38
+Solution Report     SOLVE Exercise2 Using MIP From line 36
 
 
                S O L V E      S U M M A R Y
 
      MODEL   Exercise2           OBJECTIVE  z
      TYPE    MIP                 DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  38
+     SOLVER  CPLEX               FROM LINE  36
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE               15.0000
 
- RESOURCE USAGE, LIMIT          0.015 10000000000.000
+ RESOURCE USAGE, LIMIT          0.035 10000000000.000
  ITERATION COUNT, LIMIT         3    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- *** This solver runs with a community license. No commercial use.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -158,7 +156,7 @@ Solution Report     SOLVE Exercise2 Using MIP From line 38
 
 
 --- MIP status (101): integer optimal solution.
---- Cplex Time: 0.00sec (det. 0.10 ticks)
+--- Cplex Time: 0.02sec (det. 0.10 ticks)
 
 --- Fixing integer variables and solving final LP...
 
@@ -182,7 +180,7 @@ Relative gap:            0.000000
 
   targetFunc  Target Function
 
----- EQU uniqueConstraintE  Every employee can only do one Job
+---- EQU uniqueConstraintE  Every employee can only do one job
 
           LOWER          LEVEL          UPPER         MARGINAL
 
@@ -231,12 +229,12 @@ e4.j4          .              .             1.0000        10.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/30/22 11:07:15 Page 7
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:46:25 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----     39 VARIABLE x.L  Employee/Job pair selected
+----     37 VARIABLE x.L  Employee/Job pair selected
 
             j1          j2          j3          j4
 
@@ -246,17 +244,18 @@ e3                               1.000
 e4       1.000
 
 
-----     40 VARIABLE z.L                   =       15.000  Target function
+----     38 VARIABLE z.L                   =       15.000  Target function
 
 
-EXECUTION TIME       =        0.078 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+EXECUTION TIME       =        0.065 SECONDS      4 MB  40.1.0 93c2a77b DEX-DEG
 
 
-USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN
-      University of Los Andes, Colombia                        DL072145
+USER: GAMS Community License for Juan Alegria        G220811|0002AO-GEN
+      Universidad de los Andes,                                  CL3634
+      License for teaching and research at degree granting institutions
 
 
 **** FILE SUMMARY
 
-Input      C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise2.gms
-Output     C:\Users\ElRey\Documents\Scripts\GAMS\laboratory-01\exercise2.lst
+Input      /Users/zejiran/hack/uniandes/MSO/laboratory-01/exercise2.gms
+Output     /Users/zejiran/hack/uniandes/MSO/laboratory-01/exercise2.lst

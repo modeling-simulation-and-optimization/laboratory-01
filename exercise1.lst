@@ -1,32 +1,32 @@
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 1
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-      Laboratorio 1 - MOS
-      Ejercicio 1
+      Laboratory 1 - MOS
+      Exercise 1
        
-      Realizado por:
+      Made by:
       Juan Andrés Romero C - 202013449
       Juan Sebastián Alegría - 202011282
    9   
   10  Sets i 'articles' /a1, a2, a3, a4, a5/;
   11   
-  12  Parameter v(i) 'Valor de cada artículo' /a1 12, a2 5, a3 9, a4 6, a5 4/;
-  13  Parameter p(i) 'Peso de cada artículo' /a1 9, a2 2, a3 2, a4 1, a5 3/;
+  12  Parameter v(i) 'Value of each article' /a1 12, a2 5, a3 9, a4 6, a5 4/;
+  13  Parameter p(i) 'Weigth of each article' /a1 9, a2 2, a3 2, a4 1, a5 3/;
   14   
-  15  Scalar LIMIT 'Máximo que puede llevar la mochila' /10/;
+  15  Scalar LIMIT 'Maximum weight that the backpack can carry' /10/;
   16   
-  17  Variables x(i) 'Indica si se incluye o no el artículo'
-  18            z    'Función objetivo';
+  17  Variables x(i) 'Indicates if the article is included or not'
+  18            z    'Target function';
   19   
   20  Binary Variable x;
   21   
-  22  Equations targetFunc 'Función Objetivo'
-  23            constraint 'Restricción';
+  22  Equations targetFunc 'Target function'
+  23            constraint 'Restriction';
   24   
-  25  targetFunc .. z =e= sum((i), v(i)*x(i));
-  26  constraint .. sum((i), p(i)*x(i)) =l= LIMIT;
+  25  targetFunc.. z =e= sum((i), v(i)*x(i));
+  26  constraint.. sum((i), p(i)*x(i)) =l= LIMIT;
   27   
   28  Model exercise1 /all/;
   29  option mip=CPLEX;
@@ -36,27 +36,27 @@ C o m p i l a t i o n
   33  Display z.l;
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 2
+COMPILATION TIME     =        0.003 SECONDS      3 MB  40.1.0 93c2a77b DEX-DEG
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE exercise1 Using MIP From line 30
 
 
----- targetFunc  =E=  Función Objetivo
+---- targetFunc  =E=  Target function
 
 targetFunc..  - 12*x(a1) - 5*x(a2) - 9*x(a3) - 6*x(a4) - 4*x(a5) + z =E= 0 ; (LHS = 0)
      
 
----- constraint  =L=  Restricción
+---- constraint  =L=  Restriction
 
 constraint..  9*x(a1) + 2*x(a2) + 2*x(a3) + x(a4) + 3*x(a5) =L= 10 ; (LHS = 0)
      
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 3
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE exercise1 Using MIP From line 30
 
 
----- x  Indica si se incluye o no el artículo
+---- x  Indicates if the article is included or not
 
 x(a1)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
@@ -75,13 +75,13 @@ x(a3)
 
 REMAINING 2 ENTRIES SKIPPED
 
----- z  Función objetivo
+---- z  Target function
 
 z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       targetFunc
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 4
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE exercise1 Using MIP From line 30
 
@@ -92,7 +92,7 @@ RHS       [min, max] : [ 1.000E+01, 1.000E+01] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
 
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 5
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE exercise1 Using MIP From line 30
 
@@ -104,8 +104,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
 NON ZERO ELEMENTS            11     DISCRETE VARIABLES          5
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 6
+GENERATION TIME      =        0.011 SECONDS      4 MB  40.1.0 93c2a77b DEX-DEG
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE exercise1 Using MIP From line 30
 
@@ -120,9 +120,9 @@ Solution Report     SOLVE exercise1 Using MIP From line 30
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE               24.0000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.052 10000000000.000
  ITERATION COUNT, LIMIT         1    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- *** This solver runs with a community license. No commercial use.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -131,7 +131,7 @@ Solution Report     SOLVE exercise1 Using MIP From line 30
 
 
 --- MIP status (101): integer optimal solution.
---- Cplex Time: 0.00sec (det. 0.03 ticks)
+--- Cplex Time: 0.02sec (det. 0.03 ticks)
 
 --- Fixing integer variables and solving final LP...
 
@@ -154,10 +154,10 @@ Relative gap:            0.000000
 ---- EQU targetFunc          .              .              .             1.0000      
 ---- EQU constraint        -INF            8.0000        10.0000          .          
 
-  targetFunc  Función Objetivo
-  constraint  Restricción
+  targetFunc  Target function
+  constraint  Restriction
 
----- VAR x  Indica si se incluye o no el artículo
+---- VAR x  Indicates if the article is included or not
 
           LOWER          LEVEL          UPPER         MARGINAL
 
@@ -171,33 +171,34 @@ a5          .             1.0000         1.0000         4.0000
 
 ---- VAR z                 -INF           24.0000        +INF             .          
 
-  z  Función objetivo
+  z  Target function
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 40.1.0  93c2a77b Aug 1, 2022           WEX-WEI x86 64bit/MS Windows - 08/23/22 07:36:33 Page 7
+GAMS 40.1.0  93c2a77b Aug 1, 2022           DEX-DEG x86 64bit/Mac OS X - 08/31/22 07:47:35 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----     32 VARIABLE x.L  Indica si se incluye o no el artículo
+----     32 VARIABLE x.L  Indicates if the article is included or not
 
 a2 1.000,    a3 1.000,    a4 1.000,    a5 1.000
 
 
-----     33 VARIABLE z.L                   =       24.000  Función objetivo
+----     33 VARIABLE z.L                   =       24.000  Target function
 
 
-EXECUTION TIME       =        0.047 SECONDS      4 MB  40.1.0 93c2a77b WEX-WEI
+EXECUTION TIME       =        0.092 SECONDS      4 MB  40.1.0 93c2a77b DEX-DEG
 
 
-USER: GAMS Demo license for Juan Romero              G220823|0002CO-GEN
-      University of Los Andes, Colombia                        DL072145
+USER: GAMS Community License for Juan Alegria        G220811|0002AO-GEN
+      Universidad de los Andes,                                  CL3634
+      License for teaching and research at degree granting institutions
 
 
 **** FILE SUMMARY
 
-Input      C:\Users\ElRey\Documents\Scripts\GAMS\workshop-01\exercise1.gms
-Output     C:\Users\ElRey\Documents\Scripts\GAMS\workshop-01\exercise1.lst
+Input      /Users/zejiran/hack/uniandes/MSO/laboratory-01/exercise1.gms
+Output     /Users/zejiran/hack/uniandes/MSO/laboratory-01/exercise1.lst
